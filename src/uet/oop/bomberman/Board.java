@@ -43,7 +43,7 @@ public class Board implements IRender {
 		_input = input;
 		_screen = screen;
 		
-		loadLevel(1); //start in level 1
+		loadLevel(5); //start in level 1
 	}
 	
 	@Override
@@ -88,21 +88,26 @@ public class Board implements IRender {
 	}
 	
 	public void loadLevel(int level) {
-		_time = Game.TIME;
-		_screenToShow = 2;
-		_game.resetScreenDelay();
-		_game.pause();
-		_characters.clear();
-		_bombs.clear();
-		_messages.clear();
-		
-		try {
-			_levelLoader = new FileLevelLoader(this, level);
-			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
-			_levelLoader.createEntities();
-
-		} catch (LoadLevelException e) {
+		if(level>=6)
+		{
 			endGame();
+		}
+		else {
+			_time = Game.TIME;
+			_screenToShow = 2;
+			_game.resetScreenDelay();
+			_game.pause();
+			_characters.clear();
+			_bombs.clear();
+			_messages.clear();
+			try {
+				_levelLoader = new FileLevelLoader(this, level);
+				_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
+				_levelLoader.createEntities();
+
+			} catch (LoadLevelException e) {
+				endGame();
+			}
 		}
 	}
 	
@@ -206,20 +211,6 @@ public class Board implements IRender {
 				
 		}
 		
-		return null;
-	}
-	public Character getCharacterAt(int x, int y) {
-		Iterator<Character> itr = _characters.iterator();
-
-		Character cur;
-		while(itr.hasNext()) {
-			cur = itr.next();
-			if(cur.getXTile() == x && cur.getYTile() == y) {
-				return cur;
-			}
-
-		}
-
 		return null;
 	}
 	

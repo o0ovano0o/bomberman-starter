@@ -16,7 +16,7 @@ public class SpeedItem extends Item {
 		// TODO: xử lý Bomber ăn Item
 		if (e instanceof Bomber)
 		{
-			Game.addBomberSpeed(1);
+			Game.addBomberSpeed(0.5);
 			remove();
 		}
 		return false;

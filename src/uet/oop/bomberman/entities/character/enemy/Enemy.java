@@ -86,9 +86,9 @@ public abstract class Enemy extends Character {
 			_steps = MAX_STEPS; //32
 		}
 		if(_direction==0) y--;
-		if(_direction==1) x++;
+		if(_direction==1) x--;
 		if(_direction==2) y++;
-		if(_direction==3) x--;
+		if(_direction==3) x++;
 		if(canMove(x, y)) {
 			_steps -= 1 + rest;//rest=0
 			move(x * _speed, y * _speed); //speed=0.5
