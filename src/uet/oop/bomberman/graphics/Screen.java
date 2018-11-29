@@ -2,6 +2,7 @@ package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.Sound.Test;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.character.Bomber;
 
@@ -86,6 +87,7 @@ public class Screen {
 	}
 	
 	public void drawEndGame(Graphics g, int points) {
+		Test.nen().close();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getRealWidth(), getRealHeight());
 		
@@ -108,6 +110,7 @@ public class Screen {
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("LEVEL " + level, getRealWidth(), getRealHeight(), g);
+
 		
 	}
 	

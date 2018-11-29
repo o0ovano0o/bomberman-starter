@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import uet.oop.bomberman.Sound.Test;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Message;
 import uet.oop.bomberman.entities.bomb.Bomb;
@@ -27,7 +28,7 @@ public class Board implements IRender {
 	protected Keyboard _input;
 	protected Screen _screen;
 	
-	public Entity[] _entities;
+	public Entity[] _entities ;
 	public List<Character> _characters = new ArrayList<>();
 	protected List<Bomb> _bombs = new ArrayList<>();
 	private List<Message> _messages = new ArrayList<>();
@@ -59,6 +60,7 @@ public class Board implements IRender {
 			Character a = _characters.get(i);
 			if(a.isRemoved()) _characters.remove(i);
 		}
+
 	}
 
 	@Override
@@ -76,10 +78,9 @@ public class Board implements IRender {
 				_entities[x + y * _levelLoader.getWidth()].render(screen);
 			}
 		}
-		
+
 		renderBombs(screen);
 		renderCharacter(screen);
-		
 	}
 	
 	public void nextLevel() {
@@ -98,8 +99,8 @@ public class Board implements IRender {
 		try {
 			_levelLoader = new FileLevelLoader(this, level);
 			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
-			
 			_levelLoader.createEntities();
+
 		} catch (LoadLevelException e) {
 			endGame();
 		}
@@ -114,6 +115,7 @@ public class Board implements IRender {
 		_screenToShow = 1;
 		_game.resetScreenDelay();
 		_game.pause();
+
 	}
 	
 	public boolean detectNoEnemies() {
@@ -204,6 +206,20 @@ public class Board implements IRender {
 				
 		}
 		
+		return null;
+	}
+	public Character getCharacterAt(int x, int y) {
+		Iterator<Character> itr = _characters.iterator();
+
+		Character cur;
+		while(itr.hasNext()) {
+			cur = itr.next();
+			if(cur.getXTile() == x && cur.getYTile() == y) {
+				return cur;
+			}
+
+		}
+
 		return null;
 	}
 	
@@ -311,6 +327,7 @@ public class Board implements IRender {
 		else
 			return this._time--;
 	}
+
 
 	public Keyboard getInput() {
 		return _input;

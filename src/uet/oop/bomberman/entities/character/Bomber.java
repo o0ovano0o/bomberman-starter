@@ -1,12 +1,21 @@
 package uet.oop.bomberman.entities.character;
 
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
+import sun.util.locale.provider.FallbackLocaleProviderAdapter;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.bomb.FlameSegment;
+import uet.oop.bomberman.entities.character.enemy.Enemy;
+import uet.oop.bomberman.entities.tile.Wall;
+import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
+import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.Sound.Test;
 
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +53,7 @@ public class Bomber extends Character {
 
         calculateMove();
 
+
         detectPlaceBomb();
     }
 
@@ -52,7 +62,10 @@ public class Bomber extends Character {
         calculateXOffset();
 
         if (_alive)
+        {
             chooseSprite();
+
+        }
         else
             _sprite = Sprite.player_dead1;
 
@@ -73,10 +86,21 @@ public class Bomber extends Character {
         // TODO: _timeBetweenPutBombs dùng để ngăn chặn Bomber đặt 2 Bomb cùng tại 1 vị trí trong 1 khoảng thời gian quá ngắn
         // TODO: nếu 3 điều kiện trên thỏa mãn thì thực hiện đặt bom bằng placeBomb()
         // TODO: sau khi đặt, nhớ giảm số lượng Bomb Rate và reset _timeBetweenPutBombs về 0
+        if(_input.space && Game.getBombRate()>0 && _timeBetweenPutBombs<0){
+            int x = Coordinates.pixelToTile(_x + _sprite.getSize() / 2);
+            int y = Coordinates.pixelToTile(_y - _sprite.getSize() / 2)  ;
+            placeBomb(x,y);
+            // trừ đi nửa chiều cao của người chơi và trừ đi 1 vị trí y
+            Game.addBombRate(-1);
+            _timeBetweenPutBombs=30;
+        }
+
     }
 
     protected void placeBomb(int x, int y) {
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
+        Bomb bom = new Bomb(x,y,_board);
+        _board.addBomb(bom);
     }
 
     private void clearBombs() {
@@ -97,6 +121,7 @@ public class Bomber extends Character {
     public void kill() {
         if (!_alive) return;
         _alive = false;
+        Test.die().start();
     }
 
     @Override
@@ -111,25 +136,79 @@ public class Bomber extends Character {
     protected void calculateMove() {
         // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực hiện di chuyển
         // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
+        int x=0,y = 0;
+        if(_input.up)
+            y--;
+        if(_input.down)
+            y++;
+        if(_input.left)
+            x--;
+        if(_input.right)
+            x++;
+        if(x != 0 || y != 0)  {
+            move(x*Game.getBomberSpeed(),y*Game.getBomberSpeed());
+            _moving=true;
+
+        }
+        else
+        _moving=false;
     }
 
     @Override
     public boolean canMove(double x, double y) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        return false;
+        double[] xa = new double[4];
+        double[] ya = new double[4];
+        xa[0] = (_x + x) / Game.TILES_SIZE;
+        ya[0] = ((_y + y-2)) / Game.TILES_SIZE;
+        xa[1] = (_x + x+ 11) / Game.TILES_SIZE;
+        ya[1] = ((_y + y-2)) / Game.TILES_SIZE;
+        xa[2] = ((_x + x)) / Game.TILES_SIZE;
+        ya[2] = (_y + y-13) / Game.TILES_SIZE;
+        xa[3] = (_x + x+11) / Game.TILES_SIZE;
+        ya[3] = (_y + y-13) / Game.TILES_SIZE;
+        for(int i=0;i<4;i++) {
+            Entity entity = _board.getEntity(xa[i], ya[i], this);
+            if (!entity.collide(this))
+                return false;
+        }
+
+        return true;
+
     }
 
     @Override
     public void move(double xa, double ya) {
         // TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không và thực hiện thay đổi tọa độ _x, _y
         // TODO: nhớ cập nhật giá trị _direction sau khi di chuyển
+        if(xa>0)
+            _direction=1;
+        if(xa<0)
+            _direction=3;
+        if(ya<0)
+            _direction=0;
+        if(ya>0)
+            _direction=2;
+        if(canMove(xa,ya)) {
+            _y += ya;
+            _x += xa;
+
+        }
     }
 
     @Override
     public boolean collide(Entity e) {
         // TODO: xử lý va chạm với Flame
         // TODO: xử lý va chạm với Enemy
-
+        if(e instanceof Flame)
+        {   kill();
+            return false;
+        }
+        if(e instanceof Enemy)
+        {
+            kill();
+            return true;
+        }
         return true;
     }
 

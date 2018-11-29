@@ -3,18 +3,23 @@ package uet.oop.bomberman.level;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.exceptions.LoadLevelException;
 
+import java.io.IOException;
+
 /**
  * Load và lưu trữ thông tin bản đồ các màn chơi
  */
 public abstract class LevelLoader {
 
-	protected int _width = 20, _height = 20; // default values just for testing
+	protected int _width, _height ; // default values just for testing
 	protected int _level;
 	protected Board _board;
 
 	public LevelLoader(Board board, int level) throws LoadLevelException {
 		_board = board;
 		loadLevel(level);
+	}
+	public LevelLoader(){
+
 	}
 
 	public abstract void loadLevel(int level) throws LoadLevelException;

@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import uet.oop.bomberman.Sound.Test;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
@@ -14,6 +15,8 @@ import java.awt.image.DataBufferInt;
  * Gọi phương thức render(), update() cho tất cả các entity
  */
 public class Game extends Canvas {
+
+
 
 	public static final int TILES_SIZE = 16,
 							WIDTH = TILES_SIZE * (31 / 2),
@@ -110,7 +113,6 @@ public class Game extends Canvas {
 	
 	public void start() {
 		_running = true;
-		
 		long  lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0; //nanosecond, 60 frames per second
@@ -118,6 +120,7 @@ public class Game extends Canvas {
 		int frames = 0;
 		int updates = 0;
 		requestFocus();
+		Test.nen().start();
 		while(_running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
@@ -154,7 +157,6 @@ public class Game extends Canvas {
 			}
 		}
 	}
-	
 	public static double getBomberSpeed() {
 		return bomberSpeed;
 	}
@@ -183,9 +185,7 @@ public class Game extends Canvas {
 		_screenDelay = SCREENDELAY;
 	}
 
-	public Board getBoard() {
-		return _board;
-	}
+	public Board getBoard() { return _board; }
 
 	public boolean isPaused() {
 		return _paused;
@@ -194,5 +194,6 @@ public class Game extends Canvas {
 	public void pause() {
 		_paused = true;
 	}
+	public  void play(){ _paused=false;}
 	
 }

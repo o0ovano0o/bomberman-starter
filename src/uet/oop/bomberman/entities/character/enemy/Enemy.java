@@ -8,12 +8,13 @@ import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.entities.character.enemy.ai.AI;
+import uet.oop.bomberman.entities.character.enemy.ai.AILow;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
 
 import java.awt.*;
-
+import uet.oop.bomberman.Sound.Test;
 public abstract class Enemy extends Character {
 
 	protected int _points;
@@ -79,6 +80,25 @@ public abstract class Enemy extends Character {
 		// TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không
 		// TODO: sử dụng move() để di chuyển
 		// TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
+		double x=0,y=0;
+		if(_steps <= 0){
+			_direction = _ai.calculateDirection();
+			_steps = MAX_STEPS; //32
+		}
+		if(_direction==0) y--;
+		if(_direction==1) x++;
+		if(_direction==2) y++;
+		if(_direction==3) x--;
+		if(canMove(x, y)) {
+			_steps -= 1 + rest;//rest=0
+			move(x * _speed, y * _speed); //speed=0.5
+			_moving = true;
+
+		} else {
+			_steps = 0;
+			_moving = false;
+		}
+
 	}
 	
 	@Override
@@ -90,26 +110,69 @@ public abstract class Enemy extends Character {
 	
 	@Override
 	public boolean canMove(double x, double y) {
-		// TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-		return false;
+//		double xa = _x, ya = _y - 16; //trừ y để có kq chính xác hơn
+//		if(_direction == 0) { ya += _sprite.getSize() -1 ; xa += _sprite.getSize()/2; }//len
+//		if(_direction == 1) {ya += _sprite.getSize()/2; xa += 1;}//phai
+//		if(_direction == 2) { xa += _sprite.getSize()/2; ya += 1;}//xuong
+//		if(_direction == 3) { xa += _sprite.getSize() -1; ya += _sprite.getSize()/2;}//trai
+//
+//		int xx = Coordinates.pixelToTile(xa) +(int)x;
+//		int yy = Coordinates.pixelToTile(ya) +(int)y;
+//
+//		Entity a = _board.getEntity(xx, yy, this); //entity of the position we want to go
+//
+//		return a.collide(this);
+
+		double[] xa = new double[4];
+		double[] ya = new double[4];
+		xa[0] = (_x + x) / Game.TILES_SIZE;
+		ya[0] = ((_y + y-1)) / Game.TILES_SIZE;
+		xa[1] = (_x + x+ 14) / Game.TILES_SIZE;
+		ya[1] = ((_y + y-1)) / Game.TILES_SIZE;
+		xa[2] = ((_x + x)) / Game.TILES_SIZE;
+		ya[2] = (_y + y-14) / Game.TILES_SIZE;
+		xa[3] = (_x + x+14) / Game.TILES_SIZE;
+		ya[3] = (_y + y-14) / Game.TILES_SIZE;
+		for(int i=0;i<4;i++) {
+			Entity entity = _board.getEntity(xa[i], ya[i], this);
+			if (!entity.collide(this))
+				return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: xử lý va chạm với Flame
 		// TODO: xử lý va chạm với Bomber
+		if(e instanceof Flame)
+		{
+			kill();
+			return false;
+		}
+		if(e instanceof  Bomber){
+			((Bomber) e).kill();
+			return false;
+		}
 		return true;
 	}
 	
 	@Override
 	public void kill() {
 		if(!_alive) return;
-		_alive = false;
-		
-		_board.addPoints(_points);
 
-		Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
+		_alive = false;
+
+		_board.addPoints(_points);
+        Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
 		_board.addMessage(msg);
+		int loop=0;
+		if(this instanceof Balloon)
+		    loop=1;
+		if(this instanceof Oneal)
+		    loop=2;
+        Test.enemy().loop(loop);
+
 	}
 	
 	
@@ -119,7 +182,9 @@ public abstract class Enemy extends Character {
 		else {
 			if(_finalAnimation > 0) --_finalAnimation;
 			else
+
 				remove();
+
 		}
 	}
 	
