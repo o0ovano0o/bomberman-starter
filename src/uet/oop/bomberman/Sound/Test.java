@@ -8,7 +8,6 @@ import sun.audio.AudioStream;
 import javax.sound.sampled.*;
     public class Test
     {
-       boolean sound;
         public static Clip play(String path)
         {
             Clip clip=null;
