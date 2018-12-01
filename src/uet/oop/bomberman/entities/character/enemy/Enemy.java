@@ -115,12 +115,12 @@ public abstract class Enemy extends Character {
 		double[] ya = new double[4];
 		xa[0] = (_x + x) / Game.TILES_SIZE;
 		ya[0] = ((_y + y-1)) / Game.TILES_SIZE;
-		xa[1] = (_x + x+ 14) / Game.TILES_SIZE;
+		xa[1] = (_x + x+ 13) / Game.TILES_SIZE;
 		ya[1] = ((_y + y-1)) / Game.TILES_SIZE;
 		xa[2] = ((_x + x)) / Game.TILES_SIZE;
-		ya[2] = (_y + y-14) / Game.TILES_SIZE;
-		xa[3] = (_x + x+14) / Game.TILES_SIZE;
-		ya[3] = (_y + y-14) / Game.TILES_SIZE;
+		ya[2] = (_y + y-13) / Game.TILES_SIZE;
+		xa[3] = (_x + x+13) / Game.TILES_SIZE;
+		ya[3] = (_y + y-13) / Game.TILES_SIZE;
 		for(int i=0;i<4;i++) {
 			Entity entity = _board.getEntity(xa[i], ya[i], this);
 			if (!entity.collide(this))

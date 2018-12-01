@@ -20,7 +20,7 @@ public class AIHigh extends AI{
     }
     @Override
     public int calculateDirection() {
-        int rd=random.nextInt(3),t,kc=5;
+        int rd=random.nextInt(5),t,kc=5;
         double a,b;
 
         for( int i=0;i<_bombs.size();i++){
@@ -35,13 +35,13 @@ public class AIHigh extends AI{
                 else if (b > -kc && b <= 0) return 0;
             }
         }
-        if(rd==0) {
+        if(rd==0||rd==1) {
             if (_bomber.getX() - _e.getX() > 0)
                 return 3;
             else
                 return 1;
         }
-        else if(rd==1) {
+        else if(rd==2||rd==3) {
             if (_bomber.getY() - _e.getY() > 0)
                 return 2;
             else

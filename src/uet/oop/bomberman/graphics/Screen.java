@@ -128,7 +128,17 @@ public class Screen {
 	    int y = (fm.getAscent() + (h - (fm.getAscent() + fm.getDescent())) / 2);
 	    g.drawString(s, x, y);
 	 }
-	
+	public void drawString(Graphics g,String x) {
+		g.setColor(Color.red);
+		g.fillRect(0, 0, getRealWidth(), getRealHeight());
+
+		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		g.setFont(font);
+		g.setColor(Color.white);
+		drawCenteredString(x, getRealWidth(), getRealHeight(), g);
+
+
+	}
 	public int getWidth() {
 		return _width;
 	}

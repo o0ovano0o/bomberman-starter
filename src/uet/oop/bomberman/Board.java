@@ -92,7 +92,10 @@ public class Board implements IRender {
 	public void loadLevel(int level) {
 		if(level>=6)
 		{
+
 			endGame();
+			Test.win().play();
+			_screenToShow=4;
 		}
 		else {
 			_time = Game.TIME;
@@ -146,6 +149,8 @@ public class Board implements IRender {
 				break;
 			case 3:
 				_screen.drawPaused(g);
+            case 4:
+                _screen.drawString(g,"YOU WIN!!!");
 				break;
 		}
 	}

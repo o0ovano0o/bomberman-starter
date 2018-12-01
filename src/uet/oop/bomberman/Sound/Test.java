@@ -30,10 +30,13 @@ import javax.sound.sampled.*;
             return play("/sound/end.wav");
         }
         public static AudioClip nen(){
-            return play("/sound/nen2.wav");
+            return play("/sound/nen1.wav");
         }
         public static AudioClip an(){
             return play("/sound/jum.wav");
+        }
+        public static AudioClip win(){
+            return play("/sound/victory.wav");
         }
     }
 
