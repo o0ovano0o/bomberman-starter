@@ -1,7 +1,6 @@
 package uet.oop.bomberman.gui;
 
 import uet.oop.bomberman.Game;
-import uet.oop.bomberman.gui.menu.Menu;
 
 import javax.swing.*;
 import java.awt.*;
