@@ -14,6 +14,7 @@ import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
 
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,7 +24,8 @@ import java.util.List;
  * Quản lý thao tác điều khiển, load level, render các màn hình của game
  */
 public class Board implements IRender {
-	protected LevelLoader _levelLoader;
+
+    protected LevelLoader _levelLoader;
 	protected Game _game;
 	protected Keyboard _input;
 	protected Screen _screen;
@@ -43,7 +45,7 @@ public class Board implements IRender {
 		_input = input;
 		_screen = screen;
 		
-		loadLevel(5); //start in level 1
+		loadLevel(1); //start in level 1
 	}
 	
 	@Override
@@ -117,6 +119,7 @@ public class Board implements IRender {
 	}
 	
 	public void endGame() {
+		Test.nen().stop();
 		_screenToShow = 1;
 		_game.resetScreenDelay();
 		_game.pause();

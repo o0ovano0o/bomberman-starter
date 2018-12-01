@@ -34,7 +34,7 @@ public class Bomb extends AnimatedEntitiy {
 			_timeToExplode--;
 		else {
 			if(!_exploded) {
-                Test.bom().start();
+                Test.bom().play();
 			    explode();
 
 			}
@@ -125,7 +125,7 @@ public class Bomb extends AnimatedEntitiy {
 			return _allowedToPassThru;
 		}
 		if(e instanceof  Flame){
-			explode();
+			_timeToExplode=0;
 			return true;
 		}
 

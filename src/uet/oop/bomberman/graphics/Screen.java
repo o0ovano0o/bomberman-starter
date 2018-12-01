@@ -87,7 +87,7 @@ public class Screen {
 	}
 	
 	public void drawEndGame(Graphics g, int points) {
-		Test.nen().close();
+
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getRealWidth(), getRealHeight());
 		

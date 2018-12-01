@@ -121,7 +121,7 @@ public class Bomber extends Character {
     public void kill() {
         if (!_alive) return;
         _alive = false;
-        Test.die().start();
+        Test.die().play();
     }
 
     @Override

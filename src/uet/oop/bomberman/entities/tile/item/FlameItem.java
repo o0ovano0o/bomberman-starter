@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.tile.item;
 
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.Sound.Test;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
@@ -18,6 +19,7 @@ public class FlameItem extends Item {
 		{
 			Game.addBombRadius(1);
 			remove();
+			Test.an().play();
 		}
 		return false;
 	}

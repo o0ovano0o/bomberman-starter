@@ -4,6 +4,7 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
+import uet.oop.bomberman.level.Coordinates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +20,20 @@ public class AIHigh extends AI{
     }
     @Override
     public int calculateDirection() {
-        int rd=random.nextInt(2),t,a,b;
+        int rd=random.nextInt(3),t,kc=5;
+        double a,b;
+
         for( int i=0;i<_bombs.size();i++){
-            a= (int) (_bombs.get(i).getX()-_e.getX());
-            b= (int) (_bombs.get(i).getY()-_e.getY());
-            if(a<100&&a>0) return 1;
-            else if(a>-100&&a<0) return 3;
-            else if(b<100&&b>0) return 0;
-            else if(b>-100&&b<0) return 2;
-            System.out.println(a +" "+b);
+            a = _e.getXTile() - _bombs.get(0).getX();
+            b = _e.getYTile() - _bombs.get(0).getY();
+            if(b==0) {
+                if (a < kc && a >= 0) return 3;
+                else if (a > -kc && a <= 0) return 1;
+            }
+            if(a==0) {
+                if (b < kc && b >= 0) return 2;
+                else if (b > -kc && b <= 0) return 0;
+            }
         }
         if(rd==0) {
             if (_bomber.getX() - _e.getX() > 0)
@@ -35,11 +41,14 @@ public class AIHigh extends AI{
             else
                 return 1;
         }
-        else {
+        else if(rd==1) {
             if (_bomber.getY() - _e.getY() > 0)
                 return 2;
             else
                 return 0;
+        }
+        else{
+            return random.nextInt(3);
         }
     }
 }

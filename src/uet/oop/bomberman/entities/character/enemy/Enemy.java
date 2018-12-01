@@ -110,18 +110,6 @@ public abstract class Enemy extends Character {
 	
 	@Override
 	public boolean canMove(double x, double y) {
-//		double xa = _x, ya = _y - 16; //trừ y để có kq chính xác hơn
-//		if(_direction == 0) { ya += _sprite.getSize() -1 ; xa += _sprite.getSize()/2; }//len
-//		if(_direction == 1) {ya += _sprite.getSize()/2; xa += 1;}//phai
-//		if(_direction == 2) { xa += _sprite.getSize()/2; ya += 1;}//xuong
-//		if(_direction == 3) { xa += _sprite.getSize() -1; ya += _sprite.getSize()/2;}//trai
-//
-//		int xx = Coordinates.pixelToTile(xa) +(int)x;
-//		int yy = Coordinates.pixelToTile(ya) +(int)y;
-//
-//		Entity a = _board.getEntity(xx, yy, this); //entity of the position we want to go
-//
-//		return a.collide(this);
 
 		double[] xa = new double[4];
 		double[] ya = new double[4];
@@ -166,12 +154,15 @@ public abstract class Enemy extends Character {
 		_board.addPoints(_points);
         Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
 		_board.addMessage(msg);
-		int loop=0;
+		int loop;
 		if(this instanceof Balloon)
 		    loop=1;
 		if(this instanceof Oneal)
 		    loop=2;
-        Test.enemy().loop(loop);
+		else
+		    loop=3;
+		for (int i=1 ;i<=loop;i++)
+        Test.enemy().play();
 
 	}
 	

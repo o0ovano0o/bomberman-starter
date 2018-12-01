@@ -47,9 +47,6 @@ public class Frame extends JFrame {
 	public void setPoints(int points) {
 		_infopanel.setPoints(points);
 	}
-	public void endGame(){
-		_game.getBoard().endGame();
-    }
     public void pause(){
 		if(_game.isPaused()){
 			_game.play();

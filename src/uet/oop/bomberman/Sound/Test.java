@@ -1,46 +1,39 @@
 package uet.oop.bomberman.Sound;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.io.*;
 import java.net.URL;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 
 import javax.sound.sampled.*;
     public class Test
     {
-        public static Clip play(String path)
+        public static AudioClip play(String path)
         {
-            Clip clip=null;
-            AudioInputStream audio=null;
-           try {
-               URL url = Test.class.getResource(path);
-               audio = AudioSystem.getAudioInputStream(url);
-               clip = AudioSystem.getClip();
-               clip.open(audio);
+            AudioClip clip=null;
+            URL url = Test.class.getResource(path);
+            clip = Applet.newAudioClip(url);
 
-           } catch (UnsupportedAudioFileException e) {
-               e.printStackTrace();
-           } catch (LineUnavailableException e) {
-               e.printStackTrace();
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
             return clip;
         }
-        public static Clip bom(){
+        public static AudioClip bom(){
             return play("/sound/Bomb.wav");
         }
-        public static Clip die(){
+        public static AudioClip die(){
             return play("/sound/die.wav");
         }
-        public static Clip enemy(){
+        public static AudioClip enemy(){
             return play("/sound/coin.wav");
         }
-        public static Clip next(){
+        public static AudioClip next(){
             return play("/sound/end.wav");
         }
-        public static Clip nen(){
+        public static AudioClip nen(){
             return play("/sound/nen2.wav");
+        }
+        public static AudioClip an(){
+            return play("/sound/jum.wav");
         }
     }
 
