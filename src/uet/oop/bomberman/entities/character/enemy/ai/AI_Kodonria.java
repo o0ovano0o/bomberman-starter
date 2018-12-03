@@ -9,11 +9,11 @@ import uet.oop.bomberman.level.Coordinates;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIHigh extends AI{
+public class AI_Kodonria extends AI{
     Bomber _bomber;
     Enemy _e;
     ArrayList<Bomb> _bombs;
-    public AIHigh(Bomber bomber, Enemy e, Board board) {
+    public AI_Kodonria(Bomber bomber, Enemy e, Board board) {
         _bomber = bomber;
         _e = e;
         _bombs= (ArrayList<Bomb>) board.getBombs();
@@ -24,16 +24,13 @@ public class AIHigh extends AI{
         double a,b;
 
         for( int i=0;i<_bombs.size();i++){
-            a = _e.getXTile() - _bombs.get(0).getX();
-            b = _e.getYTile() - _bombs.get(0).getY();
-            if(b==0) {
+            a = _e.getXTile() - _bombs.get(i).getX();
+            b = _e.getYTile() - _bombs.get(i).getY();
+            System.out.println(_e.getXTile()+" "+_bombs.get(i).getX());
                 if (a < kc && a >= 0) return 3;
                 else if (a > -kc && a <= 0) return 1;
-            }
-            if(a==0) {
-                if (b < kc && b >= 0) return 2;
+                else  if (b < kc && b >= 0) return 2;
                 else if (b > -kc && b <= 0) return 0;
-            }
         }
         if(rd==0||rd==1) {
             if (_bomber.getX() - _e.getX() > 0)

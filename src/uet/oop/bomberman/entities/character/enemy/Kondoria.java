@@ -2,8 +2,8 @@ package uet.oop.bomberman.entities.character.enemy;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
-import uet.oop.bomberman.entities.character.enemy.ai.AIHigh;
 import uet.oop.bomberman.entities.character.enemy.ai.AIMedium;
+import uet.oop.bomberman.entities.character.enemy.ai.AI_Kodonria;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Kondoria extends Enemy {
@@ -14,7 +14,7 @@ public class Kondoria extends Enemy {
 
         _sprite = Sprite.kondoria_right1;
 
-        _ai = new AIHigh(_board.getBomber(), this,_board);
+        _ai = new AI_Kodonria(_board.getBomber(), this,_board);
         _direction  = _ai.calculateDirection();
     }
     /*
