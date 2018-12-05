@@ -122,7 +122,7 @@ public abstract class Enemy extends Character {
 		xa[3] = (_x + x+14) / Game.TILES_SIZE;
 		ya[3] = (_y + y-14) / Game.TILES_SIZE;
 		for(int i=0;i<4;i++) {
-			if(xa[i]<0||ya[i]<0||xa[i]>=13||ya[i]>=31)
+			if(this instanceof Ovape &&(xa[i]<0||ya[i]<0||xa[i]>=13||ya[i]>=31))
 				return false;
 			Entity entity = _board.getEntity(xa[i], ya[i], this);
 			if (!entity.collide(this))
