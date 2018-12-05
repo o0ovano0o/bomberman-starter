@@ -23,8 +23,10 @@ public class Portal extends Tile {
 
 			if(e.getXTile() == getX() && e.getYTile() == getY()) {
 				if(_board.detectNoEnemies())
-					 Test.next().play();
+				{
+					Test.next().play();
 					_board.nextLevel();
+				}
 			}
 
 			return true;

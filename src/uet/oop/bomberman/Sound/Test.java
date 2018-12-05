@@ -30,7 +30,7 @@ import javax.sound.sampled.*;
             return play("/sound/end.wav");
         }
         public static AudioClip nen(){
-            return play("/sound/nen1.wav");
+            return play("/sound/nen2.wav");
         }
         public static AudioClip an(){
             return play("/sound/jum.wav");

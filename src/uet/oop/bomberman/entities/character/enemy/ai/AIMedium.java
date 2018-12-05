@@ -16,11 +16,13 @@ public class AIMedium extends AI {
 	public int calculateDirection() {
 		// TODO: cài đặt thuật toán tìm đường đi
 		int i=random.nextInt(5),t;
+		if(_bomber==null)
+			return random.nextInt(4);
 		if(i==0||i==1) {
 			if (_bomber.getX() - _e.getX() > 0)
-				return 3;
-			else
 				return 1;
+			else
+				return 3;
 		}
 		else if(i==2||i==3) {
 			if (_bomber.getY() - _e.getY() > 0)

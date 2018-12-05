@@ -107,7 +107,16 @@ public class Sprite {
 	public static Sprite kondoria_right3 = new Sprite(16, 11, 7, SpriteSheet.tiles, 16, 16);
 	
 	public static Sprite kondoria_dead = new Sprite(16, 10, 8, SpriteSheet.tiles, 16, 16);
-	
+	//Kondoria
+	public static Sprite ovape_left1 = new Sprite(16, 6 ,5, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_left2 = new Sprite(16, 6, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_left3 = new Sprite(16, 6, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite ovape_right1 = new Sprite(16, 7, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_right2 = new Sprite(16, 7, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_right3 = new Sprite(16, 7, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite ovape_dead = new Sprite(16, 10, 8, SpriteSheet.tiles, 16, 16);
 	//ALL
 	public static Sprite mob_dead1 = new Sprite(16, 15, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite mob_dead2 = new Sprite(16, 15, 1, SpriteSheet.tiles, 16, 16);

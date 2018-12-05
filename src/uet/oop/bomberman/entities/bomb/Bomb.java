@@ -23,6 +23,7 @@ public class Bomb extends AnimatedEntitiy {
 	
 	public Bomb(int x, int y, Board board) {
 		_x = x;
+
 		_y = y;
 		_board = board;
 		_sprite = Sprite.bomb;
@@ -60,7 +61,6 @@ public class Bomb extends AnimatedEntitiy {
 		
 		int xt = (int)_x << 4;
 		int yt = (int)_y << 4;
-		
 		screen.renderEntity(xt, yt , this);
 	}
 	

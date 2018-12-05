@@ -83,16 +83,16 @@ public abstract class Enemy extends Character {
 		double x=0,y=0;
 		if(_steps <= 0){
 			_direction = _ai.calculateDirection();
-			_steps = MAX_STEPS; //32
+			_steps = MAX_STEPS;
 		}
 		if(_direction==0) y--;
-		if(_direction==1) x--;
+		if(_direction==1) x++;
 		if(_direction==2) y++;
-		if(_direction==3) x++;
-		if(canMove(x, y)) {
-			_steps -= 1 + rest;//rest=0
-			move(x * _speed, y * _speed); //speed=0.5
-			_moving = true;
+			if(_direction==3) x--;
+			if(canMove(x, y)) {
+				_steps -= 1 + rest;
+				move(x * _speed, y * _speed);
+				_moving = true;
 
 		} else {
 			_steps = 0;
@@ -115,13 +115,15 @@ public abstract class Enemy extends Character {
 		double[] ya = new double[4];
 		xa[0] = (_x + x) / Game.TILES_SIZE;
 		ya[0] = ((_y + y-1)) / Game.TILES_SIZE;
-		xa[1] = (_x + x+ 13) / Game.TILES_SIZE;
-		ya[1] = ((_y + y-1)) / Game.TILES_SIZE;
+		xa[1] = (_x + x+ 14) / Game.TILES_SIZE;
+		ya[1] = ((_y + y-14)) / Game.TILES_SIZE;
 		xa[2] = ((_x + x)) / Game.TILES_SIZE;
-		ya[2] = (_y + y-13) / Game.TILES_SIZE;
-		xa[3] = (_x + x+13) / Game.TILES_SIZE;
-		ya[3] = (_y + y-13) / Game.TILES_SIZE;
+		ya[2] = (_y + y-14) / Game.TILES_SIZE;
+		xa[3] = (_x + x+14) / Game.TILES_SIZE;
+		ya[3] = (_y + y-14) / Game.TILES_SIZE;
 		for(int i=0;i<4;i++) {
+			if(xa[i]<0||ya[i]<0||xa[i]>=13||ya[i]>=31)
+				return false;
 			Entity entity = _board.getEntity(xa[i], ya[i], this);
 			if (!entity.collide(this))
 				return false;
@@ -144,7 +146,7 @@ public abstract class Enemy extends Character {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void kill() {
 		if(!_alive) return;
@@ -152,21 +154,21 @@ public abstract class Enemy extends Character {
 		_alive = false;
 
 		_board.addPoints(_points);
-        Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
+		Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
 		_board.addMessage(msg);
 		int loop;
 		if(this instanceof Balloon)
-		    loop=1;
+			loop=1;
 		if(this instanceof Oneal)
-		    loop=2;
+			loop=2;
 		else
-		    loop=3;
+			loop=3;
 		for (int i=1 ;i<=loop;i++)
-        Test.enemy().play();
+			Test.enemy().play();
 
 	}
-	
-	
+
+
 	@Override
 	protected void afterKill() {
 		if(_timeAfter > 0) --_timeAfter;
